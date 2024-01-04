@@ -17,11 +17,12 @@
 package statsgod_test
 
 import (
+	"math"
+	"sort"
+
 	. "github.com/acquia/statsgod/statsgod"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"math"
-	"sort"
 )
 
 var statsBenchmarkTimeLimit = 0.25
@@ -144,6 +145,7 @@ var _ = Describe("Statistics", func() {
 			Measure("it should find quantile quickly.", func(b Benchmarker) {
 				runtime := b.Time("runtime", func() {
 					testQuantile = values.Quantile(0.9)
+					_ = testQuantile
 				})
 				Expect(runtime.Seconds()).Should(BeNumerically("<", statsBenchmarkTimeLimit), "it should find quantile quickly.")
 			}, 100000)
